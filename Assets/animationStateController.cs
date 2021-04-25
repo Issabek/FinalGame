@@ -21,24 +21,47 @@ public class animationStateController : MonoBehaviour
         bool Backwards = Input.GetKey("s");
         bool Idle = Input.anyKeyDown;
         if (Forward)
+        {
+            animator.SetBool("sideWalkRight", false);
+            animator.SetBool("sideWalkLeft", false);
+            animator.SetBool("backWalk", false);
+            animator.SetBool("turnRight", false);
+            animator.SetBool("turnLeft", false);
             animator.SetBool("isWalking", true);
+            
+        }
         else if ((Left && Forward) || Left)
         {
+            animator.SetBool("isWalking", false);
             animator.SetBool("sideWalkLeft", true);
         }
         else if ((Right && Forward) || Right)
         {
+            animator.SetBool("isWalking", false);
             animator.SetBool("sideWalkRight", true);
         }
         else if (Backwards)
             animator.SetBool("backWalk", true);
         else if (!Idle)
         {
+            animator.SetBool("turnRight", false);
+            animator.SetBool("turnLeft", false);
             animator.SetBool("isWalking", false);
             animator.SetBool("backWalk", false);
             animator.SetBool("sideWalkRight", false);
             animator.SetBool("sideWalkLeft", false);
         }
+        if (Input.GetAxis("Mouse X") > 0)
+        {
+            animator.SetBool("turnLeft", false);
+            animator.SetBool("turnRight", true);
+        }
+        if (Input.GetAxis("Mouse X") < 0)
+        {
+            animator.SetBool("turnRight", false);
+            animator.SetBool("turnLeft", true);
+        }
+        
 
     }
 }

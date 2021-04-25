@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using QuickStart;
+[RequireComponent(typeof(PlayerManager))]
 public class PlayerSetup : Mirror.NetworkBehaviour
 {   [SerializeField]
     Behaviour[] ComponentsToDisable;
@@ -47,7 +48,7 @@ public class PlayerSetup : Mirror.NetworkBehaviour
 		{
 			DisableComponents();
 			AssignRemotePlayer();
-			floatingInfo.transform.LookAt(Camera.main.transform);
+			floatingInfo.transform.LookAt(Camera.current.transform);
 		}
 		else
 		{
@@ -56,12 +57,19 @@ public class PlayerSetup : Mirror.NetworkBehaviour
 			if (sceneCamera != null)
 			{
 				sceneCamera.gameObject.SetActive(false);
-				string name = "Player" + Random.Range(100, 999);
+				string name = "Player " + GetComponent<NetworkIdentity>().netId;
 				CmdSetupPlayer(name);
 			}
 		}
 	}
-	void AssignRemotePlayer()
+    public override void OnStartClient()
+    {
+		string netId = ""+GetComponent<NetworkIdentity>().netId;
+		PlayerManager player = GetComponent<PlayerManager>();
+		GameManager.RegisterPlayer(netId, player);
+    }
+
+    void AssignRemotePlayer()
     {
 		gameObject.layer = LayerMask.NameToLayer(remoteLyaerName);
     }
@@ -80,5 +88,6 @@ public class PlayerSetup : Mirror.NetworkBehaviour
 		{
 			sceneCamera.gameObject.SetActive(true);
 		}
+		GameManager.UnRegisterPlayer(transform.name);
 	}
 }

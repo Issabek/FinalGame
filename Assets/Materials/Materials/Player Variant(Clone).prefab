@@ -666,6 +666,8 @@ GameObject:
   - component: {fileID: 1365343959467134262}
   - component: {fileID: 733633627063314833}
   - component: {fileID: 1581008042246634092}
+  - component: {fileID: 6112731472782676642}
+  - component: {fileID: 5514413666213157403}
   m_Layer: 6
   m_Name: xbot
   m_TagString: Untagged
@@ -721,6 +723,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf641dd2f4e8e7418ee14355a38df7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6112731472782676642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949673443724651765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &5514413666213157403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949673443724651765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  animator: {fileID: 0}
 --- !u!1 &1999123940828746549
 GameObject:
   m_ObjectHideFlags: 0

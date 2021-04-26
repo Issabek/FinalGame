@@ -21,7 +21,13 @@ public class PlayerShoot : NetworkBehaviour
             this.enabled = false;
         }
     }
+    Animator anim;
 
+    void OnTriggerEnter(Collider other)
+    {
+        anim.SetBool("isFired",true);
+        anim.SetBool("isFired", false);
+    }
     private void Update()
     {
         if (Input.GetButtonDown("Fire1"))
@@ -34,9 +40,13 @@ public class PlayerShoot : NetworkBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, weapon.range, mask))
         {
+            anim = hit.collider.gameObject.GetComponentInChildren<Animator>();
+
             if (hit.collider.tag == PlayerTag)
             {
+
                 CmdPlayerShot(hit.collider.name, weapon.damage + rnd.Next(-3, 3));
+                OnTriggerEnter(hit.collider);
             }
             else
             {

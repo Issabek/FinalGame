@@ -29,7 +29,6 @@ public class PlayerSetup : Mirror.NetworkBehaviour
 
 	void Awake()
 	{
-		//allow all players to run this
 		sceneScript = GameObject.Find("SceneReference").GetComponent<SceneReference>().sceneScript;
 	}
 	  

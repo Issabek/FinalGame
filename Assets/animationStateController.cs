@@ -5,13 +5,11 @@ using UnityEngine;
 public class animationStateController : MonoBehaviour
 {
     Animator animator;
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         bool isWalking = animator.GetBool("isWalking");
@@ -20,6 +18,24 @@ public class animationStateController : MonoBehaviour
         bool Right = Input.GetKey("d");
         bool Backwards = Input.GetKey("s");
         bool Idle = Input.anyKeyDown;
+        if (Input.GetAxis("Mouse X") > 0)
+        {
+            animator.SetBool("turnLeft", false);
+            animator.SetBool("turnRight", true);
+        }
+        if (Input.GetAxis("Mouse X") < 0)
+        {
+            animator.SetBool("turnRight", false);
+            animator.SetBool("turnLeft", true);
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            animator.SetBool("isFired", true);
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            animator.SetBool("isFired", false);
+        }
         if (Forward)
         {
             animator.SetBool("sideWalkRight", false);
@@ -28,12 +44,12 @@ public class animationStateController : MonoBehaviour
             animator.SetBool("turnRight", false);
             animator.SetBool("turnLeft", false);
             animator.SetBool("isWalking", true);
-            
         }
         else if ((Left && Forward) || Left)
         {
             animator.SetBool("isWalking", false);
             animator.SetBool("sideWalkLeft", true);
+
         }
         else if ((Right && Forward) || Right)
         {
@@ -51,17 +67,5 @@ public class animationStateController : MonoBehaviour
             animator.SetBool("sideWalkRight", false);
             animator.SetBool("sideWalkLeft", false);
         }
-        if (Input.GetAxis("Mouse X") > 0)
-        {
-            animator.SetBool("turnLeft", false);
-            animator.SetBool("turnRight", true);
-        }
-        if (Input.GetAxis("Mouse X") < 0)
-        {
-            animator.SetBool("turnRight", false);
-            animator.SetBool("turnLeft", true);
-        }
-        
-
     }
 }

@@ -10,11 +10,10 @@ public class PlayerManager : NetworkBehaviour
     [SyncVar]
     private int CurrentHealth;
 
+    
     private void Awake()
     {
         SetDefaults();
-          
-        
     }
 
     public void TakeDamage(int damage)

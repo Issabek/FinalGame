@@ -51,7 +51,6 @@ public class PlayerSetup : Mirror.NetworkBehaviour
 		}
 		else
 		{
-
 			sceneCamera = Camera.main;
 			if (sceneCamera != null)
 			{
@@ -59,6 +58,7 @@ public class PlayerSetup : Mirror.NetworkBehaviour
 				string name = "Player " + GetComponent<NetworkIdentity>().netId;
 				CmdSetupPlayer(name);
 			}
+			GetComponent<PlayerManager>().Setup();
 		}
 	}
     public override void OnStartClient()

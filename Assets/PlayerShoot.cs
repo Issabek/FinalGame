@@ -60,6 +60,6 @@ public class PlayerShoot : NetworkBehaviour
     {
         Debug.Log("We hit " + _ID);
         PlayerManager player = GameManager.GetPlayer(_ID);
-        player.TakeDamage(damage);
+        player.RpcTakeDamage(damage);
     }
 }

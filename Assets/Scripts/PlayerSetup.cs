@@ -13,7 +13,6 @@ public class PlayerSetup : Mirror.NetworkBehaviour
 	public TextMesh playerNameText;
 	public GameObject floatingInfo;
 	private SceneScript sceneScript;
-	private Material playerMaterialClone;
 
 	Camera sceneCamera;
 

@@ -1,42 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Mirror;
 public class animationStateController : MonoBehaviour
 {
     Animator animator;
     void Start()
     {
-        animator = GetComponent<Animator>();
     }
-
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        //gameObject.GetComponent<NetworkAnimator>().send(0, true);
+    }
+    public  void GotHit()
+    {
+        animator.SetBool("isFired",true);
+        animator.SetBool("isFired",false);
+    }
     void Update()
     {
-        bool isWalking = animator.GetBool("isWalking");
         bool Forward = Input.GetKey("w");
+        bool ForwardUp = Input.GetKeyUp("w");
         bool Left = Input.GetKey("a");
+        bool LeftUp = Input.GetKeyUp("a");
         bool Right = Input.GetKey("d");
+        bool RightUp = Input.GetKeyUp("d");
+
         bool Backwards = Input.GetKey("s");
-        bool Idle = Input.anyKeyDown;
-        if (Input.GetAxis("Mouse X") > 0)
-        {
-            animator.SetBool("turnLeft", false);
-            animator.SetBool("turnRight", true);
-        }
-        if (Input.GetAxis("Mouse X") < 0)
-        {
-            animator.SetBool("turnRight", false);
-            animator.SetBool("turnLeft", true);
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            animator.SetBool("isFired", true);
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            animator.SetBool("isFired", false);
-        }
-        if (Forward)
+        bool BackwardsUp = Input.GetKeyUp("s");
+
+        bool Idle = Input.anyKey;
+        
+        if (Forward && !ForwardUp)
         {
             animator.SetBool("sideWalkRight", false);
             animator.SetBool("sideWalkLeft", false);
@@ -45,20 +41,35 @@ public class animationStateController : MonoBehaviour
             animator.SetBool("turnLeft", false);
             animator.SetBool("isWalking", true);
         }
-        else if ((Left && Forward) || Left)
+        else if (Backwards && !BackwardsUp)
         {
+            animator.SetBool("sideWalkRight", false);
+            animator.SetBool("sideWalkLeft", false);
+            animator.SetBool("backWalk", true);
+            animator.SetBool("turnRight", false);
+            animator.SetBool("turnLeft", false);
             animator.SetBool("isWalking", false);
+        }
+        if (Left && !LeftUp)
+        {
+            animator.SetBool("sideWalkRight", false);
             animator.SetBool("sideWalkLeft", true);
+            animator.SetBool("backWalk", false);
+            animator.SetBool("turnRight", false);
+            animator.SetBool("turnLeft", false);
+            animator.SetBool("isWalking", false);
 
         }
-        else if ((Right && Forward) || Right)
+        else if(Right && !RightUp)
         {
-            animator.SetBool("isWalking", false);
             animator.SetBool("sideWalkRight", true);
+            animator.SetBool("sideWalkLeft", false);
+            animator.SetBool("backWalk", false);
+            animator.SetBool("turnRight", false);
+            animator.SetBool("turnLeft", false);
+            animator.SetBool("isWalking", false);
         }
-        else if (Backwards)
-            animator.SetBool("backWalk", true);
-        else if (!Idle)
+        else if(!Forward && !Backwards && !Right && !Left && Input.GetAxis("Mouse X")==0)
         {
             animator.SetBool("turnRight", false);
             animator.SetBool("turnLeft", false);
@@ -67,5 +78,21 @@ public class animationStateController : MonoBehaviour
             animator.SetBool("sideWalkRight", false);
             animator.SetBool("sideWalkLeft", false);
         }
+
+        if (Input.GetAxis("Mouse X") > 0 && !Forward)
+        {
+            animator.SetBool("turnLeft", false);
+            animator.SetBool("turnRight", true);
+        }
+        else if (Input.GetAxis("Mouse X") < 0 && !Forward )
+        {
+            animator.SetBool("turnRight", false);
+            animator.SetBool("turnLeft", true);
+        }
+
+        if (Input.GetMouseButtonDown(0) && !Input.GetMouseButtonUp(0))
+            animator.SetBool("isFired", true);
+        else
+            animator.SetBool("isFired", false);
     }
 }

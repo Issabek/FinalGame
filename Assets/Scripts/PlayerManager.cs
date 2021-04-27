@@ -7,6 +7,7 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField]
     private int MaxHealth = 100;
 
+
     [SyncVar]
     private bool _isDead = false;
     public bool isDead
@@ -27,6 +28,15 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField]
     private Behaviour[] disableOnDeath;
     private bool[] wasEnabled;
+
+    private IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(3f);
+        SetDefaults();
+        Transform startPoint = NetworkManager.singleton.GetStartPosition();
+        transform.position = startPoint.position;
+        transform.rotation = startPoint.rotation;
+    }
 
     public void Setup()
     {
@@ -56,6 +66,11 @@ public class PlayerManager : NetworkBehaviour
         }
         Debug.Log("You took damage: " + damage+" before health: "+CurrentHealth);
         CurrentHealth -= damage;
+        //GameObject originalGameObject = GameObject.FindWithTag("Player");
+        //GameObject child = originalGameObject.transform.GetChild(2).gameObject;
+        //Animator anim = child.GetComponent<Animator>();
+        //anim.SendMessage("SetBool",("isFired",true));
+        //anim.SetBool("isFired", false);
         Debug.Log("Current health: "+CurrentHealth);
         if (CurrentHealth <= 0)
         {
@@ -72,6 +87,8 @@ public class PlayerManager : NetworkBehaviour
         Collider _col = GetComponent<Collider>();
         if (_col != null)
             _col.enabled = true;
+
+        StartCoroutine(Respawn());
     }
     public void SetDefaults()
     {
